@@ -1,0 +1,38 @@
+(one method that stores the username as string, igoring deletions and renamings) over having no solution, you can place the following in your custom_functions_inc.php, that gives you "=users" and "=developers" as possible enumeration-values
+
+<pre>
+--------------------
+
+# Construct an enumeration for all usernames.
+# To use this in a custom field type &quot;=users&quot; in the possible values field.
+function custom_function_override_enum_users() {
+
+    $t_users = project_get_all_user_rows( helper_get_current_project(), ANYBODY );
+
+    $t_enum = array();
+    foreach ( $t_users as $t_user ) {
+        $t_enum[] = $t_user['username'];
+    }
+    sort( $t_enum );
+    $t_possible_values = implode( '|', $t_enum );
+
+    return $t_possible_values;
+}
+# --------------------
+# Construct an enumeration for all usernames.
+# To use this in a custom field type &quot;=developers&quot; in the possible values field.
+function custom_function_override_enum_developers() {
+
+    $t_users = project_get_all_user_rows( helper_get_current_project(), DEVELOPER ); 
+
+    $t_enum = array();
+    foreach ( $t_users as $t_user ) {
+        $t_enum[] = $t_user['username'];
+    }
+    sort( $t_enum );
+    $t_possible_values = implode( '|', $t_enum );
+
+    return $t_possible_values;
+}
+
+</pre>
